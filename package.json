@@ -1,0 +1,23 @@
+{
+  "name": "particles",
+  "version": "1.0.0",
+  "description": "Particle effect as used on couleecreative.com",
+  "main": "particles.js",
+  "dependencies": {
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mishac/particles.git"
+  },
+  "keywords": [
+    "particles"
+  ],
+  "author": "Misha Chitharanjan <mishac@mishac.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mishac/particles/issues"
+  },
+  "homepage": "https://github.com/mishac/particles#readme"
+}
