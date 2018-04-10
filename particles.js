@@ -9,12 +9,14 @@ const Particles = class Particles {
     this.rows = Math.floor(this.height / this.spacing);
     this.cols = Math.floor(this.width / this.spacing);
     this.numParticles = this.rows * this.cols;
-    this.thickness = options.thickness || Math.pow(80, 2);
+    this.thickness = options.thickness || 80 ** 2;
     this.color = options.color || [0, 0, 0, 255];
     this.drag = options.drag || 0.95;
     this.ease = options.ease || 0.25;
     this.$element = $element;
-    this.$mask = this.$('<div class="particle-mask" />').appendTo(this.$element);
+    this.$mask = this.$('<div class="particle-mask" />').appendTo(
+      this.$element,
+    );
     this.canvas = document.createElement('canvas');
     this.canvas.width = this.width;
     this.canvas.height = this.height;
@@ -37,7 +39,7 @@ const Particles = class Particles {
       vx: 0,
       vy: 0,
       x: 0,
-      y: 0
+      y: 0,
     };
 
     for (let i = 0; i < this.numParticles; i++) {
@@ -52,7 +54,7 @@ const Particles = class Particles {
 
   _attachEvents() {
     const that = this;
-    this.$mask.on('mousemove.particles', function (e) {
+    this.$mask.on('mousemove.particles', e => {
       const bounds = that.$mask[0].getBoundingClientRect();
       that.mx = e.clientX - bounds.left;
       that.my = e.clientY - bounds.top;
@@ -63,20 +65,24 @@ const Particles = class Particles {
   _step() {
     if (this.toggle) {
       if (!this.manual) {
-        let t = +new Date() * 0.001;
-        this.mx = this.width * 0.5 + (Math.cos(t * 2.1) * Math.cos(t * 0.9) * this.width * 0.45);
-        this.my = this.height * 0.5 + (Math.sin(t * 3.2) * Math.tan(Math.sin(t * 0.8)) * this.height * 0.45);
+        const t = +new Date() * 0.001;
+        this.mx =
+          this.width * 0.5 +
+          Math.cos(t * 2.1) * Math.cos(t * 0.9) * this.width * 0.45;
+        this.my =
+          this.height * 0.5 +
+          Math.sin(t * 3.2) * Math.tan(Math.sin(t * 0.8)) * this.height * 0.45;
       }
 
       for (let i = 0; i < this.numParticles; i++) {
-        let point = this.particles[i];
-        let dx = this.mx - point.x;
-        let dy = this.my - point.y;
-        let d = dx * dx + dy * dy;
-        let f = -this.thickness / d;
+        const point = this.particles[i];
+        const dx = this.mx - point.x;
+        const dy = this.my - point.y;
+        const d = dx * dx + dy * dy;
+        const f = -this.thickness / d;
 
         if (d < this.thickness) {
-          let t = Math.atan2(dy, dx);
+          const t = Math.atan2(dy, dx);
           point.vx += f * Math.cos(t);
           point.vy += f * Math.sin(t);
         }
@@ -86,12 +92,12 @@ const Particles = class Particles {
       }
     }
     else {
-      let imageData = this.ctx.createImageData(this.width, this.height);
-      let data = imageData.data;
+      const imageData = this.ctx.createImageData(this.width, this.height);
+      const data = imageData.data;
 
       for (let i = 0; i < this.numParticles; i++) {
-        let point = this.particles[i];
-        let n = (~~point.x + (~~point.y * this.width)) * 4;
+        const point = this.particles[i];
+        const n = (~~point.x + ~~point.y * this.width) * 4;
         this.color.forEach((val, index) => {
           data[n + index] = this.color[index];
         });
